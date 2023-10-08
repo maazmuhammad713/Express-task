@@ -33,34 +33,39 @@ const resourceSchema = Joi.object().keys({
   note: Joi.string().required(),
 });
 
-module.exports = {
-  getResources: (req, res) => {
-    const data = resourceService.getResources(req.body);
-    res.send(data);
-  },
-  getResourceByID: (req, res) => {
-    const data = resourceService.getResourceByID(req.params.id);
-    res.send(data);
-  },
+const getResources = (req, res) => {
+  const data = resourceService.getResources(req.body);
+  res.send(data);
+};
+const getResourceByID = (req, res) => {
+  const data = resourceService.getResourceByID(req.params.id);
+  res.send(data);
+};
 
-  updateResource: (req, res) => {
-    const data = resourceService.updateResource(req.params.id, req.body);
-    res.send(data);
-  },
-  deleteResource: (req, res) => {
-    const data = resourceService.deleteResource(req.params.id);
-    res.send(data);
-  },
-  addResource: (req, res) => {
-    try {
-      const validate = resourceSchema.validate(req.body);
-      if (validate.error) {
-        res.status(400).send(validate.error);
-      }
-      const data = resourceService.addResource(req.body);
-      res.send(data);
-    } catch {
-      res.status(500).send("Something went wrong");
+const updateResource = (req, res) => {
+  const data = resourceService.updateResource(req.params.id, req.body);
+  res.send(data);
+};
+const deleteResource = (req, res) => {
+  const data = resourceService.deleteResource(req.params.id);
+  res.send(data);
+};
+const addResource = (req, res) => {
+  try {
+    const validate = resourceSchema.validate(req.body);
+    if (validate.error) {
+      res.status(400).send(validate.error);
     }
-  },
+    const data = resourceService.addResource(req.body);
+    res.send(data);
+  } catch {
+    res.status(500).send("Something went wrong");
+  }
+};
+module.exports = {
+  getResources,
+  getResourceByID,
+  updateResource,
+  deleteResource,
+  addResource,
 };
